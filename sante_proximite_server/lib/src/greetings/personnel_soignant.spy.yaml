@@ -1,0 +1,12 @@
+class: PersonnelSoignant
+table: personnel_soignant
+fields:
+  nomPersonnel: String
+  prenomPersonnel: String
+  email: String
+  roleAcces: String
+  motDePasseHash: String
+  tokenSession: String?
+  dateDerniereConnexion: DateTime?
+  qualification: String
+  pointDeService: PointDeService?, relation

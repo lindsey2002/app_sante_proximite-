@@ -1,0 +1,16 @@
+# Files and directories created by pub
+.dart_tool/
+.packages
+build/
+*.config.yaml
+config/passwords.yaml
+
+# Pubspec overrides
+pubspec_overrides.yaml
+# Widget Preview related
+.widget_preview/
+
+# Flutter / IDE
+.idea/
+.vscode/
+*.iml

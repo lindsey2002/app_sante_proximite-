@@ -1,0 +1,10 @@
+class: PointDeService
+table: point_de_service
+fields:
+  nomEtablissement: String
+  typeStructure: String
+  adresse: String
+  latitude: double
+  longitude: double
+  telephone: String?
+  estActif: bool, default=true

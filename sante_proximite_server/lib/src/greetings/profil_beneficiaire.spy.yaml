@@ -1,0 +1,8 @@
+class: ProfilBeneficiaire
+table: profil_beneficiaire
+fields:
+  nom: String
+  prenom: String
+  lienParente: String
+  age: int
+  usager: Usager?, relation

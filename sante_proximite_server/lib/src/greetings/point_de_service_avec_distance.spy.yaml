@@ -1,0 +1,4 @@
+class: PointDeServiceAvecDistance
+fields:
+  pointDeService: PointDeService
+  distanceKm: double?

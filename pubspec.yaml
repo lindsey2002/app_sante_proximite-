@@ -1,0 +1,11 @@
+name: _
+publish_to: none
+
+environment:
+  sdk: '^3.8.0'
+
+workspace:
+  - sante_proximite_client
+  - sante_proximite_server
+  - sante_proximite_flutter
+

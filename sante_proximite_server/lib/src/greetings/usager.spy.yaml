@@ -1,0 +1,10 @@
+class: Usager
+table: usager
+fields:
+  nom: String
+  prenom: String
+  telephone: String
+  email: String
+  motDePasseHash: String
+  tokenSession: String?
+  dateDerniereConnexion: DateTime

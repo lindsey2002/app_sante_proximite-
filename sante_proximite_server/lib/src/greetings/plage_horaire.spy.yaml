@@ -1,0 +1,9 @@
+class: PlageHoraire
+table: plage_horaire
+fields:
+  personnelSoignant: PersonnelSoignant?, relation
+  dateDuJour: DateTime
+  heureDebut: DateTime
+  heureFin: DateTime
+  estReservee: bool
+  pointDeService: PointDeService?, relation

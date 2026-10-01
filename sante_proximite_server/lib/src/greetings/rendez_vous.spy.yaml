@@ -1,0 +1,12 @@
+class: RendezVous
+table: rendez_vous
+fields:
+  dateRdv: DateTime
+  heure: DateTime
+  status: String
+  recapitulatifDescription: String?
+  codeRdv: String
+  pieceJointeUrl: String?
+  plageHoraire: PlageHoraire?, relation
+  profilBeneficiaire: ProfilBeneficiaire?, relation
+  pointDeService: PointDeService?, relation

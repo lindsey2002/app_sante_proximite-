@@ -1,0 +1,44 @@
+services:
+  # Development services
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "8090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: sante_proximite
+      POSTGRES_PASSWORD: "MWvIORV2DLEJgexPpnxVl-a07zl95QFN"
+    volumes:
+      - sante_proximite_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "8091:6379"
+    command: redis-server --requirepass "smzdJHAYFjlbVEjhro8B_KQe5s9fZgOZ"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+  # Test services
+  postgres_test:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "9090:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: sante_proximite_test
+      POSTGRES_PASSWORD: "444I1TwkWKdG0vj3zDEs2GXNUg6QBYLS"
+    volumes:
+      - sante_proximite_test_data:/var/lib/postgresql/data
+
+  redis_test:
+    image: redis:6.2.6
+    ports:
+      - "9091:6379"
+    command: redis-server --requirepass "o8fj2q0adFbl1tUHubFQtzmBjP_lggRx"
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+volumes:
+  sante_proximite_data:
+  sante_proximite_test_data:

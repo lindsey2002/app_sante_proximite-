@@ -1,16 +1,28 @@
-# Files and directories created by pub
+# Dart / Pub
 .dart_tool/
 .packages
 build/
-*.config.yaml
-config/passwords.yaml
-
-# Pubspec overrides
 pubspec_overrides.yaml
-# Widget Preview related
+
+# Serverpod & Sécurité (Très important)
+**/config/passwords.yaml
+**/web/app/
+*.env
+*.env.*
+*.log
+
+# Widget Preview
 .widget_preview/
 
-# Flutter / IDE
+# Flutter
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# IDE & Éditeurs
 .idea/
 .vscode/
 *.iml
+
+# Fichiers système
+.DS_Store
+Thumbs.db

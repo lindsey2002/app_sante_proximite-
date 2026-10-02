@@ -177,8 +177,11 @@ class RendezVousEndpoint extends Endpoint {
         pointDeServiceId: plageVerouillee.pointDeServiceId,
       );
 
-      return await RendezVous.db.insertRow(session, nouveauRdv, transaction: transaction);
-
+      return await RendezVous.db.insertRow(
+        session,
+        nouveauRdv,
+        transaction: transaction,
+      );
     });
   }
 }

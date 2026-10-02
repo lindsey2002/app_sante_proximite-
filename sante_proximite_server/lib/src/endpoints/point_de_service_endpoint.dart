@@ -28,7 +28,9 @@ class PointDeServiceEndpoint extends Endpoint {
 
     if (query != null && query.trim().isNotEmpty) {
       final q = '%${query.trim()}%';
-      expr = expr & (PointDeService.t.nomEtablissement.ilike(q) |
+      expr =
+          expr &
+          (PointDeService.t.nomEtablissement.ilike(q) |
               PointDeService.t.adresse.ilike(q) |
               PointDeService.t.typeStructure.ilike(q));
     }
@@ -42,36 +44,57 @@ class PointDeServiceEndpoint extends Endpoint {
         longitudeUsager >= -180 &&
         longitudeUsager <= 180;
 
-    List<PointDeService> pointsBruts; 
+    List<PointDeService> pointsBruts;
+    if (gpsValide) {
+      pointsBruts = await PointDeService.db.find(
+        session,
+        where: (_) => expr,
+      );
+    } else {
+      pointsBruts = await PointDeService.db.find(
+        session,
+        where: (_) => expr,
+        orderByList: (t) => [
+          Order(column: t.nomEtablissement),
+          Order(column: t.id),
+        ],
+        limit: limitSecurise,
+        offset: offsetSecurise,
+      );
+    }
+
+    List<PointDeServiceAvecDistance> resultats = pointsBruts.map((p) {
+      double? distance;
       if (gpsValide) {
-        pointsBruts = await PointDeService.db.find(
-          session, where: (_) => expr,
-        );
-      } else {
-        pointsBruts = await PointDeService.db.find(
-          session, where: (_) => expr, orderByList: (t) => [Order(column: t.nomEtablissement), Order(column: t.id),], limit: limitSecurise, offset: offsetSecurise,
+        distance = _calculerDistanceHaversine(
+          latitudeUsager,
+          longitudeUsager,
+          p.latitude,
+          p.longitude,
         );
       }
 
-      List<PointDeServiceAvecDistance> resultats = pointsBruts.map((p) {
-        double? distance;
-        if(gpsValide){
-          distance = _calculerDistanceHaversine(latitudeUsager, longitudeUsager, p.latitude, p.longitude);
-        }
-
-        return PointDeServiceAvecDistance(pointDeService: p, distanceKm: distance,);
-      }).toList();
-      /////////////// Arrete a ce niveau .........
+      return PointDeServiceAvecDistance(
+        pointDeService: p,
+        distanceKm: distance,
+      );
+    }).toList();
+    /////////////// Arrete a ce niveau .........
 
     // tri par distance croissant si gps est valide
     if (gpsValide) {
       resultats.sort(
-        (a, b) => (a.distanceKm ?? 0).compareTo(b.distanceKm ?? 0));
+        (a, b) => (a.distanceKm ?? 0).compareTo(b.distanceKm ?? 0),
+      );
 
-        final debut = offsetSecurise < resultats.length ? offsetSecurise : resultats.length;
-        final fin = (debut + limitSecurise) < resultats.length ? (debut + limitSecurise) : resultats.length;
+      final debut = offsetSecurise < resultats.length
+          ? offsetSecurise
+          : resultats.length;
+      final fin = (debut + limitSecurise) < resultats.length
+          ? (debut + limitSecurise)
+          : resultats.length;
 
-        resultats = resultats.sublist(debut, fin);
+      resultats = resultats.sublist(debut, fin);
     }
     return resultats;
   }
